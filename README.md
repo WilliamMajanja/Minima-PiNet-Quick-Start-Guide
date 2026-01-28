@@ -1,7 +1,3 @@
-Here is the comprehensive **README.md** file for your project. I have structured it for clarity, including code blocks for easy copying and a visual breakdown of the network architecture.
-
----
-
 ```markdown
 # Minima Node & Bass OS Setup Guide 🚀
 
