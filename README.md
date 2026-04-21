@@ -73,12 +73,12 @@ curl http://<YOUR_PI_IP>:9005/status
 
 ## 5. Android Setup (Bass OS)
 ### Step 1: Flash Bass OS
-1. Download Bass OS from the [Bliss Bass Project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/).
+1. Download Bass OS from the [Bliss Co-Labs Bass OS project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/).
 2. Flash Card B.
 3. Boot Raspberry Pi with Card B.
 
 ### Step 2: Install Minima App and Connect
-1. In Bass OS, download the Minima APK from [minima.global](https://minima.global).
+1. In Bass OS, download the Minima APK from the [official Minima downloads page](https://minima.global/download).
 2. Install the APK (allow unknown sources if prompted).
 3. In the app settings, set:
    - Node IP = your Pi node IP
