@@ -1,0 +1,18 @@
+title: Minima-PiNet-OS Wiki
+description: Comprehensive documentation for Minima-PiNet-OS on Raspberry Pi
+theme: minima
+markdown: kramdown
+show_excerpts: false
+header_pages:
+  - getting-started.md
+  - installation.md
+  - architecture.md
+  - dapp-platform.md
+  - operations.md
+  - security.md
+  - development.md
+  - troubleshooting.md
+  - faq.md
+exclude:
+  - PiNet-Quick-Start-Guide.docx
+  - C_and_GUI_Programming_2nd_Edition.pdf

@@ -1,0 +1,27 @@
+---
+---
+
+@import "minima";
+
+.page-content {
+  max-width: 1080px;
+}
+
+.wiki-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 1rem 0 1.5rem;
+}
+
+.wiki-card {
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #f8fafc;
+}
+
+.wiki-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
