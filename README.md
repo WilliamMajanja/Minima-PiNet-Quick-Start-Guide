@@ -53,7 +53,7 @@ wget -O minima.jar https://github.com/minima-global/Minima/releases/latest/downl
 java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
 ```
 
-> Replace `YOUR_PASSWORD` with a strong password and never store real passwords in version control.
+> Replace `YOUR_PASSWORD` with a strong password. For better security, use a protected startup method (for example, a restricted `systemd` environment file) instead of placing real passwords directly in shell commands, which may be exposed in shell history or process listings.
 
 To keep Minima running after disconnecting SSH, use `screen`, `tmux`, or a `systemd` service.
 
