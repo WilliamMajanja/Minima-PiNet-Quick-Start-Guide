@@ -1,114 +1,105 @@
-```markdown
-# Minima Node & Bass OS Setup Guide 🚀
+# PiNet Quick Start Guide 🚀
 
-This repository provides a step-by-step walkthrough for deploying a **Minima Node** on a Raspberry Pi and integrating it with an Android-based environment via **Bass OS**.
+This guide walks you through setting up a Raspberry Pi as a Minima PiNet node and connecting to it from an Android environment.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 1. [Hardware Requirements](#1-hardware-requirements)
-2. [Raspberry Pi Base Setup](#2-raspberry-pi-base-setup)
-3. [Minima Node Installation](#3-minima-node-installation)
-4. [Minima RPC Configuration](#4-minima-rpc-configuration)
+2. [Prepare Raspberry Pi OS](#2-prepare-raspberry-pi-os)
+3. [Install and Run Minima](#3-install-and-run-minima)
+4. [Verify RPC Access](#4-verify-rpc-access)
 5. [Android Setup (Bass OS)](#5-android-setup-bass-os)
-6. [Network & Ports](#6-network--ports)
+6. [Network Ports](#6-network-ports)
+7. [Troubleshooting](#7-troubleshooting)
 
 ---
 
 ## 1. Hardware Requirements
-* **Device:** Raspberry Pi 4 or 5 (4GB RAM minimum recommended).
-* **Storage:** 2x High-speed microSD cards (32GB+). 
-  * *Card A: For the headless Minima Node.*
-  * *Card B: For the Bass OS (Android) interface.*
-* **Connectivity:** Ethernet cable or stable 2.4/5GHz Wi-Fi.
+- **Raspberry Pi:** Pi 4 or Pi 5 (4GB RAM or higher recommended)
+- **Storage:** Two microSD cards (32GB+ recommended)
+  - **Card A:** Raspberry Pi OS + Minima node
+  - **Card B:** Bass OS (Android environment)
+- **Network:** Ethernet or stable Wi-Fi
 
 ---
 
-## 2. Raspberry Pi Base Setup
-To ensure the node runs efficiently, we use a 64-bit Lite environment.
-
-1. **Flash OS:** Use [Raspberry Pi Imager](https://www.raspberrypi.com/software/) to flash **Raspberry Pi OS Lite (64-bit)**.
-2. **Pre-configure:** Use `Ctrl+Shift+X` in the imager to:
-   * Enable **SSH**.
-   * Set a hostname (e.g., `minima-pi`).
-   * Configure Wi-Fi.
-3. **Install Dependencies:**
-   Connect via terminal: `ssh pi@minima-pi.local`
-   ```bash
-   sudo apt update && sudo apt upgrade -y
-   sudo apt install openjdk-17-jre-headless -y
-
-```
-
----
-
-## 3. Minima Node Installation
-
-Download and launch the official Minima Java executable.
+## 2. Prepare Raspberry Pi OS
+1. Use [Raspberry Pi Imager](https://www.raspberrypi.com/software/) to flash **Raspberry Pi OS Lite (64-bit)** to Card A.
+2. In Imager advanced settings (`Ctrl+Shift+X`), configure:
+   - SSH enabled
+   - Hostname (example: `minima-pi`)
+   - Wi-Fi credentials (if needed)
+3. Boot the Pi and connect:
 
 ```bash
-# Download the latest JAR
-wget -O minima.jar [https://github.com/minima-global/Minima/releases/latest/download/minima.jar](https://github.com/minima-global/Minima/releases/latest/download/minima.jar)
-
-# Start the node (Replace 'YOUR_PASSWORD' with a secure choice)
-java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
-
+ssh pi@minima-pi.local
 ```
 
-> **Note:** To keep the node running after closing the SSH session, consider using `screen` or creating a `systemd` service.
+4. Update packages and install Java:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install openjdk-17-jre-headless -y
+```
 
 ---
 
-## 4. Minima RPC Configuration
+## 3. Install and Run Minima
+Download the latest Minima JAR and start the node:
 
-The RPC (Remote Procedure Call) interface allows external applications (like your Android device) to communicate with the node.
+```bash
+wget -O minima.jar https://github.com/minima-global/Minima/releases/latest/download/minima.jar
+java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
+```
 
-* **Default RPC Port:** `9005`
-* **Connectivity Test:** Run this from another device on the same network to verify the node is responding:
+> Replace `YOUR_PASSWORD` with a strong password.
+> For better security, use a protected startup method (for example, a restricted `systemd` environment file) instead of placing real passwords directly in shell commands, which may be exposed in shell history or process listings.
+
+To keep Minima running after disconnecting SSH, use `screen`, `tmux`, or a `systemd` service.
+
+---
+
+## 4. Verify RPC Access
+Minima RPC is used by external apps to query your node.
+
+- **Default RPC port:** `9005`
+- Test from another device on the same network:
+
 ```bash
 curl http://<YOUR_PI_IP>:9005/status
-
 ```
-
-
 
 ---
 
 ## 5. Android Setup (Bass OS)
-
-Bass OS allows you to run a full Android environment on your Pi hardware, perfect for the Minima Android APK.
-
 ### Step 1: Flash Bass OS
+1. Open the [Bliss Co-Labs Bass OS project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/) and navigate to the newest `BlissBass` release folder (highest version/newest date).
+2. Download the Raspberry Pi image file for your device model.
+3. Flash Card B.
+4. Boot Raspberry Pi with Card B.
 
-1. Download the latest image from the [Bliss Bass Project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/).
-2. Flash it to your **second** SD card.
-3. Boot the Pi. You will now be in an Android-based UI.
-
-### Step 2: Install & Connect Minima
-
-1. Open the browser in Bass OS and download the **Minima APK** from [minima.global](https://minima.global).
-2. Install the APK (allow "Install from Unknown Sources").
-3. **Connect to Node:** * Open the app and navigate to **Settings**.
-* Enter the IP address of your Raspberry Pi Node and port `9005` to sync your Incentive ID and account data.
-
-
+### Step 2: Install Minima App and Connect
+1. Download the latest Minima APK from [minima.global](https://minima.global).
+2. Install the APK (allow unknown sources if prompted).
+3. In the app settings, set:
+   - Node IP = your Pi node IP
+   - Port = `9005`
 
 ---
 
-## 6. Network & Ports
+## 6. Network Ports
+Allow these ports on your local firewall/router:
 
-Ensure your router or firewall does not block the following ports:
-
-| Port | Function | Protocol |
+| Port | Purpose | Protocol |
 | --- | --- | --- |
-| **9001** | P2P Main Network | TCP |
-| **9002** | MDS (MiniDAPP System) | TCP |
-| **9005** | RPC Interface | TCP |
+| `9001` | Minima P2P | TCP |
+| `9002` | Minima MDS | TCP |
+| `9005` | Minima RPC | TCP |
 
 ---
 
-## 🛠 Troubleshooting
-
-* **Java Errors:** Ensure you are using version 17+. Check with `java -version`.
-* **RPC Connection Refused:** Ensure the Pi and the Bass OS device are on the same subnet.
-* **Performance:** If running Bass OS and the Node on the same hardware, ensure you have adequate cooling (heatsinks/fan).
+## 7. Troubleshooting
+- **Java errors:** confirm Java 17+ with `java -version`.
+- **RPC connection refused:** verify IP, port, and same subnet.
+- **Poor performance/overheating:** use heatsink/fan and stable power supply.
