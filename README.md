@@ -53,7 +53,7 @@ wget -O minima.jar https://github.com/minima-global/Minima/releases/latest/downl
 java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
 ```
 
-> Replace `YOUR_PASSWORD` with a strong password.
+> Replace `YOUR_PASSWORD` with a strong password and never store real passwords in version control.
 
 To keep Minima running after disconnecting SSH, use `screen`, `tmux`, or a `systemd` service.
 
@@ -99,6 +99,6 @@ Allow these ports on your local firewall/router:
 ---
 
 ## 7. Troubleshooting
-- **Java errors:** confirm Java 17+ with `java -version`
-- **RPC connection refused:** verify IP, port, and same subnet
-- **Poor performance/overheating:** use heatsink/fan and stable power supply
+- **Java errors:** confirm Java 17+ with `java -version`.
+- **RPC connection refused:** verify IP, port, and same subnet.
+- **Poor performance/overheating:** use heatsink/fan and stable power supply.
