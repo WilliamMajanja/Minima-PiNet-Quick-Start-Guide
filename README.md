@@ -53,7 +53,8 @@ wget -O minima.jar https://github.com/minima-global/Minima/releases/latest/downl
 java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
 ```
 
-> Replace `YOUR_PASSWORD` with a strong password. For better security, use a protected startup method (for example, a restricted `systemd` environment file) instead of placing real passwords directly in shell commands, which may be exposed in shell history or process listings.
+> Replace `YOUR_PASSWORD` with a strong password.
+> For better security, use a protected startup method (for example, a restricted `systemd` environment file) instead of placing real passwords directly in shell commands, which may be exposed in shell history or process listings.
 
 To keep Minima running after disconnecting SSH, use `screen`, `tmux`, or a `systemd` service.
 
@@ -73,7 +74,7 @@ curl http://<YOUR_PI_IP>:9005/status
 
 ## 5. Android Setup (Bass OS)
 ### Step 1: Flash Bass OS
-1. Open the [Bliss Co-Labs Bass OS project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/) and navigate to the latest `BlissBass` release folder.
+1. Open the [Bliss Co-Labs Bass OS project](https://sourceforge.net/projects/bliss-co-labs/files/BlissBass/) and navigate to the newest `BlissBass` release folder (highest version/newest date).
 2. Download the Raspberry Pi image file for your device model.
 3. Flash Card B.
 4. Boot Raspberry Pi with Card B.
