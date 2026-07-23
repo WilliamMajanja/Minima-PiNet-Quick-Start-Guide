@@ -4,9 +4,25 @@
 
 This guide walks you through setting up **Minima-PiNet-OS** on a Raspberry Pi, running a full Minima L1 blockchain node, forming a cluster, and accessing the web desktop.
 
-**Architect:** William Majanja  
-**License:** MIT (PiNet-OS) / Apache 2.0 (Minima Core) / Unlicense (Coffee Protocol CPIP)  
+**Architect:** William Majanja
+**License:** MIT (PiNet-OS) / Apache 2.0 (Minima Core) / Unlicense (Coffee Protocol CPIP)
 **Version:** PiNet-OS v3.0.0 | Minima Core v1.1.2 | CPIP v5.0.0
+
+---
+
+## Quick Start (One-Liner)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/WilliamMajanja/Minima-PiNet-Os/main/bin/pinet-setup | bash && cd Minima-PiNet-Os && bin/pinet setup && bin/pinet start --role master
+```
+
+Or clone manually:
+
+```bash
+git clone --depth 1 https://github.com/WilliamMajanja/Minima-PiNet-Os.git && cd Minima-PiNet-Os && bin/pinet setup && bin/pinet start --role master
+```
+
+Access the dashboard at `http://<your-pi-ip>:3000` — default creds: `pinet` / `pinet` (change immediately).
 
 ---
 
