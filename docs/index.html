@@ -68,18 +68,20 @@ a:hover { color:#fff }
 /* ═══ HEADER ═══ */
 header {
   position:relative;
-  padding:80px 0 60px;
+  padding:100px 0 80px;
   text-align:center;
   overflow:hidden;
+  background:url('img/pi-cluster.jpg') center/cover no-repeat;
 }
 header::before {
   content:'';
   position:absolute;
   inset:0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(139,92,246,0.12) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 40% at 20% 50%,rgba(6,182,212,0.06) 0%,transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 50%,rgba(139,92,246,0.06) 0%,transparent 50%);
+    linear-gradient(180deg,rgba(6,6,11,0.7) 0%,rgba(6,6,11,0.85) 50%,rgba(6,6,11,0.95) 100%),
+    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(139,92,246,0.15) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 50%,rgba(6,182,212,0.08) 0%,transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 50%,rgba(139,92,246,0.08) 0%,transparent 50%);
   pointer-events:none;
 }
 header::after {
@@ -172,7 +174,18 @@ section {
   padding:80px 0;
   border-bottom:1px solid var(--border);
   position:relative;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
+section::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(6,6,11,0.88);
+  z-index:0;
+}
+section > .container { position:relative;z-index:1 }
 section:last-of-type { border-bottom:none }
 section::after {
   content:'';
@@ -181,7 +194,16 @@ section::after {
   width:200px;height:1px;
   background:linear-gradient(90deg,transparent,var(--accent),transparent);
   opacity:0.3;
+  z-index:1;
 }
+
+.bg-pi-board { background-image:url('img/pi-board.jpg') }
+.bg-circuit { background-image:url('img/circuit-board.jpg') }
+.bg-cluster { background-image:url('img/pi-cluster.jpg') }
+.bg-motherboard { background-image:url('img/pi-motherboard.jpg') }
+.bg-server { background-image:url('img/server-rack.jpg') }
+.bg-network { background-image:url('img/network-server.jpg') }
+.bg-server-room { background-image:url('img/server-room.jpg') }
 
 /* ═══ TYPOGRAPHY ═══ */
 h2 {
@@ -498,7 +520,7 @@ footer .tagline { margin-top:16px;font-size:.82rem;color:var(--text3);opacity:0.
 </nav>
 
 <!-- OVERVIEW -->
-<section id="overview">
+<section id="overview" class="bg-pi-board">
 <div class="container">
 <h2>Overview</h2>
 <p><strong>Minima-PiNet-OS</strong> (v3.0.0) is a zero-bloat, blockchain-native operating system that turns an $80 Raspberry Pi into a self-sovereign edge cloud.</p>
@@ -532,7 +554,7 @@ footer .tagline { margin-top:16px;font-size:.82rem;color:var(--text3);opacity:0.
 </section>
 
 <!-- HARDWARE -->
-<section id="hardware">
+<section id="hardware" class="bg-circuit">
 <div class="container">
 <h2>Hardware Requirements</h2>
 <div class="table-wrap">
@@ -555,7 +577,7 @@ footer .tagline { margin-top:16px;font-size:.82rem;color:var(--text3);opacity:0.
 </section>
 
 <!-- FLASH & BOOT -->
-<section id="flash">
+<section id="flash" class="bg-motherboard">
 <div class="container">
 <h2>Quick Start: Flash & Boot</h2>
 <div class="step reveal">
@@ -604,7 +626,7 @@ sync</code></pre>
 </section>
 
 <!-- RUNTIME -->
-<section id="runtime">
+<section id="runtime" class="bg-server">
 <div class="container">
 <h2>Spawnable Runtime (Any Linux)</h2>
 <p>PiNet-OS runs as a contained environment on <strong>any existing Linux distro</strong> on Raspberry Pi. No dedicated image flashing required.</p>
@@ -642,7 +664,7 @@ pinet config show        <span class="comment"># View configuration</span></code
 </section>
 
 <!-- DEMO -->
-<section id="demo">
+<section id="demo" class="bg-pi-board">
 <div class="container">
 <h2>Local Desktop Demo</h2>
 <p>Run the full web desktop UI locally in under two minutes — no Raspberry Pi required.</p>
@@ -663,7 +685,7 @@ python run.py</code></pre>
 </section>
 
 <!-- MINIMA -->
-<section id="minima">
+<section id="minima" class="bg-circuit">
 <div class="container">
 <h2>Minima Blockchain Node</h2>
 <p>Minima is a decentralized L1 blockchain with a UTXO model, MMR proof database, covenants, MAST, and post-quantum signatures (WOTS+). Every user runs a full node.</p>
@@ -722,7 +744,7 @@ java -jar minima.jar -nop2p -test -genesis</code></pre>
 </section>
 
 <!-- CLUSTER -->
-<section id="cluster">
+<section id="cluster" class="bg-cluster">
 <div class="container">
 <h2>Forming a PiNet Cluster</h2>
 <p>PiNet-OS clusters use the <strong>Maxima protocol</strong> (Minima's encrypted P2P bus) for all coordination. No central API server, no shared database.</p>
@@ -781,7 +803,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- CPIP -->
-<section id="cpip">
+<section id="cpip" class="bg-server-room">
 <div class="container">
 <h2>CPIP Security Provider</h2>
 <p><strong>The Coffee Protocol (CPIP) v5.0.0</strong> is the primary security provider for all Minima nodes. Enabled by default (<code>CPIP_ENABLED=1</code>).</p>
@@ -845,7 +867,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- PORTS -->
-<section id="ports">
+<section id="ports" class="bg-network">
 <div class="container">
 <h2>Network Ports Reference</h2>
 <div class="table-wrap">
@@ -870,7 +892,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- CONFIG -->
-<section id="config">
+<section id="config" class="bg-server">
 <div class="container">
 <h2>Configuration Reference</h2>
 <p>All runtime configuration is controlled via environment variables. Copy <code>.env.example</code> to <code>.env</code> and edit as needed.</p>
@@ -950,7 +972,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- TROUBLESHOOT -->
-<section id="troubleshoot">
+<section id="troubleshoot" class="bg-motherboard">
 <div class="container">
 <h2>Troubleshooting</h2>
 <div class="table-wrap">
@@ -976,7 +998,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- ARCHITECTURE -->
-<section id="arch">
+<section id="arch" class="bg-cluster">
 <div class="container">
 <h2>Architecture Overview</h2>
 
@@ -1034,7 +1056,7 @@ pinet join &lt;master_maxima_address&gt;</code></pre>
 </section>
 
 <!-- VERSIONS -->
-<section id="versions">
+<section id="versions" class="bg-circuit">
 <div class="container">
 <h2>Version History & Roadmap</h2>
 <div class="table-wrap">
