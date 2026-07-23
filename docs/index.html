@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PiNet-OS Quick Start Guide</title>
+<style>
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a2e;--border:#2a2a3e;--text:#e0e0e8;--text2:#8888a0;--accent:#8b5cf6;--accent2:#6d28d9;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--blue:#3b82f6;--code-bg:#0d1117;--code-border:#21262d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+header{background:linear-gradient(135deg,#0a0a0f 0%,#1a1033 50%,#0a0a0f 100%);border-bottom:1px solid var(--border);padding:60px 0 50px;text-align:center}
+header h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#8b5cf6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+header .tagline{font-size:1.15rem;color:var(--text2);max-width:700px;margin:0 auto 24px}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;border:1px solid var(--border);background:var(--surface)}
+.badge.purple{border-color:var(--accent);color:var(--accent)}
+.badge.green{border-color:var(--green);color:var(--green)}
+.badge.blue{border-color:var(--blue);color:var(--blue)}
+nav{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav .container{display:flex;gap:0}
+nav a{display:inline-block;padding:14px 18px;color:var(--text2);font-size:.85rem;font-weight:500;border-bottom:2px solid transparent;transition:all .2s}
+nav a:hover,nav a.active{color:var(--accent);border-bottom-color:var(--accent);text-decoration:none}
+section{padding:60px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:1.8rem;font-weight:700;margin-bottom:24px;color:#fff}
+h3{font-size:1.25rem;font-weight:600;margin:28px 0 14px;color:#fff}
+h4{font-size:1rem;font-weight:600;margin:20px 0 10px;color:var(--text)}
+p{margin-bottom:16px;color:var(--text2)}
+ul,ol{margin:0 0 16px 24px;color:var(--text2)}
+li{margin-bottom:6px}
+li strong{color:var(--text)}
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:.9rem}
+th{background:var(--surface2);color:#fff;font-weight:600;text-align:left;padding:12px 16px;border:1px solid var(--border)}
+td{padding:10px 16px;border:1px solid var(--border);color:var(--text2)}
+tr:hover td{background:var(--surface)}
+code{font-family:'SF Mono',Consolas,'Liberation Mono',Menlo,monospace;font-size:.85em;background:var(--code-bg);border:1px solid var(--code-border);border-radius:6px;padding:2px 6px;color:#e06c75}
+pre{background:var(--code-bg);border:1px solid var(--code-border);border-radius:8px;padding:20px;overflow-x:auto;margin:16px 0 24px;line-height:1.5}
+pre code{background:none;border:none;padding:0;color:#abb2bf}
+pre .comment{color:#5c6370}
+pre .string{color:#98c379}
+pre .keyword{color:#c678dd}
+pre .flag{color:#e5c07b}
+.highlight{color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+.card h3{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:20px 0}
+.grid .card{margin:0}
+.step{display:flex;gap:16px;margin:16px 0;align-items:flex-start}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+.step-content{flex:1}
+.alert{border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem}
+.alert.warn{background:#1a1a0a;border:1px solid #3d3d0a;color:var(--yellow)}
+.alert.info{background:#0a1a2a;border:1px solid #0a2a4a;color:var(--blue)}
+.alert.danger{background:#1a0a0a;border:1px solid #3d0a0a;color:var(--red)}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 0;text-align:center;color:var(--text2);font-size:.85rem}
+footer a{color:var(--accent)}
+@media(max-width:768px){header h1{font-size:2rem}header{padding:40px 0 30px}section{padding:40px 0}nav a{padding:12px 14px;font-size:.8rem}table{font-size:.8rem}th,td{padding:8px 10px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<h1>PiNet-OS Quick Start Guide</h1>
+<p class="tagline">Turn a Raspberry Pi into a self-sovereign edge cloud — blockchain-native, AI-accelerated, zero-trust by default.</p>
+<div class="badges">
+<span class="badge purple">PiNet-OS v3.0.0</span>
+<span class="badge green">Minima Core v1.1.2</span>
+<span class="badge blue">CPIP v5.0.0</span>
+<span class="badge">MIT License</span>
+<span class="badge">Architect: William Majanja</span>
+</div>
+</div>
+</header>
+
+<nav>
+<div class="container">
+<a href="#overview">Overview</a>
+<a href="#hardware">Hardware</a>
+<a href="#flash">Flash & Boot</a>
+<a href="#runtime">Runtime</a>
+<a href="#demo">Demo</a>
+<a href="#minima">Minima</a>
+<a href="#cluster">Cluster</a>
+<a href="#cpip">CPIP</a>
+<a href="#ports">Ports</a>
+<a href="#config">Config</a>
+<a href="#troubleshoot">Troubleshoot</a>
+<a href="#arch">Architecture</a>
+<a href="#versions">Versions</a>
+</div>
+</nav>
+
+<!-- OVERVIEW -->
+<section id="overview">
+<div class="container">
+<h2>Overview</h2>
+<p><strong>Minima-PiNet-OS</strong> (v3.0.0) is a zero-bloat, blockchain-native operating system that turns an $80 Raspberry Pi into a self-sovereign edge cloud.</p>
+<div class="grid">
+<div class="card">
+<h3>Minima L1 Blockchain</h3>
+<p>Full node in &lt;500 MB. UTXO model, MMR proof database, KISSVM scripting, WOTS+ post-quantum signatures. Every user is a complete node.</p>
+</div>
+<div class="card">
+<h3>CPIP Security Provider</h3>
+<p>AES-256-GCM, ECDSA P-256, Hybrid ECDH + Kyber ML-KEM-768, HMAC-SHA256 RPC auth, ITF Defense probe blocking.</p>
+</div>
+<div class="card">
+<h3>k3s Edge Cluster</h3>
+<p>Lightweight Kubernetes for containerised workloads. LXC with cgroups v2 quotas, up to 16 tenants per node.</p>
+</div>
+<div class="card">
+<h3>On-Device AI</h3>
+<p>Hailo-8L NPU (13 TOPS) for local LLM inference via Ollama/GGUF. ARM NEON fallback on Pi 4.</p>
+</div>
+<div class="card">
+<h3>Browser Desktop</h3>
+<p>FastAPI + Jinja2 web UI with 23+ built-in apps: terminal, system monitor, cluster manager, wallet, AI assistant.</p>
+</div>
+<div class="card">
+<h3>Confidential Computing</h3>
+<p>Arm CCA / RISC-V AP-TEE enclaves, zkVM verifiable compute proofs, decentralized edge compute marketplace.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HARDWARE -->
+<section id="hardware">
+<div class="container">
+<h2>Hardware Requirements</h2>
+<table>
+<thead><tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr></thead>
+<tbody>
+<tr><td><strong>Compute</strong></td><td>Raspberry Pi 4 (4 GB)</td><td><strong>Raspberry Pi 5 (16 GB)</strong> x3</td></tr>
+<tr><td><strong>AI Accelerator</strong></td><td>ARM NEON (CPU)</td><td><strong>Hailo-8L NPU (13 TOPS)</strong></td></tr>
+<tr><td><strong>Storage</strong></td><td>16 GB microSD (Class 10)</td><td>128 GB NVMe SSD (PCIe Gen 3)</td></tr>
+<tr><td><strong>Network</strong></td><td>Gigabit Ethernet</td><td>Gigabit Ethernet + WireGuard mesh</td></tr>
+<tr><td><strong>Power</strong></td><td>USB-C 5V/3A</td><td>Official RPi 27W USB-C PSU</td></tr>
+<tr><td><strong>Cooling</strong></td><td>Passive heatsink</td><td>Active cooler (required for RPi 5)</td></tr>
+</tbody>
+</table>
+<p><strong>Supported Pi Models:</strong> Pi 5, Pi 4, Pi 3, Pi 2, Pi 1, Pi Zero, Pi Zero 2 W, CM3, CM4<br>
+<strong>RISC-V (Experimental):</strong> StarFive VisionFive 2 (JH7110)</p>
+<div class="alert info">A reference 3-node cluster (3x Pi 5 16GB + Hailo-8L + NVMe) costs under $1,500 fully assembled.</div>
+</div>
+</section>
+
+<!-- FLASH & BOOT -->
+<section id="flash">
+<div class="container">
+<h2>Quick Start: Flash & Boot (Raspberry Pi)</h2>
+<div class="step"><div class="step-num">1</div><div class="step-content"><h4>Download the Image</h4><p>Download <code>PiNetOS-RaspberryPi.img</code> from the <a href="https://github.com/WilliamMajanja/Minima-PiNet-Os/releases/latest">latest release</a>.</p></div></div>
+<div class="step"><div class="step-num">2</div><div class="step-content"><h4>Verify Integrity</h4><pre><code>sha256sum --check SHA256SUMS.txt</code></pre></div></div>
+<div class="step"><div class="step-num">3</div><div class="step-content"><h4>Flash the Image</h4><p>Use <strong>Raspberry Pi Imager</strong> (recommended):</p>
+<ol style="margin-left:20px"><li>Click <strong>CHOOSE OS</strong> → <strong>Use custom</strong> → select <code>PiNetOS-RaspberryPi.img</code></li>
+<li>Click <strong>CHOOSE STORAGE</strong> → select your SD card or NVMe</li>
+<li>(Optional) Click the gear icon to pre-configure Wi-Fi, hostname, and SSH</li>
+<li>Click <strong>WRITE</strong></li></ol>
+<p>Or use <code>dd</code>:</p>
+<pre><code>sudo dd if=PiNetOS-RaspberryPi.img of=/dev/sdX bs=4M status=progress conv=sync,noerror
+sync</code></pre></div></div>
+<div class="step"><div class="step-num">4</div><div class="step-content"><h4>First Boot</h4>
+<ol style="margin-left:20px"><li>Insert the flashed storage into your Raspberry Pi and power on</li>
+<li>First-boot provisioning takes ~2 minutes</li>
+<li>Access the dashboard at <code>http://&lt;pi-ip&gt;:3000</code></li></ol>
+<div class="alert warn"><strong>Default credentials:</strong> username <code>pinet</code>, password <code>pinet</code> — change immediately with <code>passwd</code>.</div>
+</div></div>
+</div>
+</section>
+
+<!-- RUNTIME -->
+<section id="runtime">
+<div class="container">
+<h2>Quick Start: Spawnable Runtime (Any Linux)</h2>
+<p>PiNet-OS runs as a contained environment on <strong>any existing Linux distro</strong> on Raspberry Pi. No dedicated image flashing required.</p>
+<pre><code><span class="comment"># 1. Clone the repository</span>
+git clone https://github.com/WilliamMajanja/Minima-PiNet-Os.git
+cd Minima-PiNet-Os
+
+<span class="comment"># 2. Run the setup script (installs Java, Python, downloads Minima)</span>
+bin/pinet setup
+
+<span class="comment"># 3. Start PiNet-OS</span>
+bin/pinet start --role master    <span class="comment"># For the first node (master)</span>
+<span class="comment"># OR</span>
+bin/pinet start --role worker --master &lt;address&gt;  <span class="comment"># For worker nodes</span></code></pre>
+
+<h3>What Setup Does</h3>
+<ol>
+<li>Checks and installs <strong>Java 17+</strong> (for the Minima node)</li>
+<li>Checks and installs <strong>Python 3.11+</strong> (for the FastAPI/Jinja web desktop)</li>
+<li>Downloads the <strong>Minima JAR</strong> to <code>~/.pinet/bin/minima.jar</code></li>
+<li>Installs the Python desktop's <code>requirements.txt</code></li>
+<li>Generates node identity and initial configuration</li>
+</ol>
+
+<h3>Managing the Runtime</h3>
+<pre><code>pinet status             <span class="comment"># Show runtime status</span>
+pinet stop               <span class="comment"># Stop all services</span>
+pinet logs --follow      <span class="comment"># Tail service logs</span>
+pinet shell              <span class="comment"># Attach to PiNet-OS session</span>
+pinet cluster            <span class="comment"># Show cluster topology</span>
+pinet open               <span class="comment"># List available apps</span>
+pinet detect             <span class="comment"># Detect Pi model and hardware</span>
+pinet config show        <span class="comment"># View configuration</span></code></pre>
+</div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+<div class="container">
+<h2>Quick Start: Local Desktop Demo</h2>
+<p>Run the full web desktop UI locally in under two minutes — no Raspberry Pi required.</p>
+<pre><code><span class="comment"># 1. Clone and enter the repo</span>
+git clone https://github.com/WilliamMajanja/Minima-PiNet-Os.git
+cd Minima-PiNet-Os
+
+<span class="comment"># 2. Install Python dependencies</span>
+pip install -r requirements.txt
+
+<span class="comment"># 3. Copy and configure environment</span>
+cp .env.example .env
+
+<span class="comment"># 4. Start the desktop server</span>
+python run.py</code></pre>
+<p>Open <strong>http://localhost:3000</strong> — you get the full desktop, system monitor, terminal, and cluster manager.</p>
+</div>
+</section>
+
+<!-- MINIMA -->
+<section id="minima">
+<div class="container">
+<h2>Minima Blockchain Node</h2>
+<p>Minima is a decentralized L1 blockchain with a UTXO model, MMR proof database, covenants, MAST, and post-quantum signatures (WOTS+). Every user runs a full node.</p>
+
+<h3>Running Minima Standalone</h3>
+<pre><code><span class="comment"># Download the latest Minima JAR</span>
+wget -O minima.jar https://github.com/WilliamMajanja/minima-core/releases/latest/download/minima.jar
+
+<span class="comment"># Start with default parameters (connects to mainnet)</span>
+java -jar minima.jar
+
+<span class="comment"># With MDS (MiniDAPP System) enabled</span>
+java -jar minima.jar -mdsenable -mdspassword YOUR_PASSWORD -port 9001
+
+<span class="comment"># Private test-net</span>
+java -jar minima.jar -nop2p -test -genesis</code></pre>
+
+<h3>CLI Parameters</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Description</th><th>Default</th></tr></thead>
+<tbody>
+<tr><td><code>-port</code></td><td>P2P port</td><td>9001</td></tr>
+<tr><td><code>-data</code></td><td>Data directory</td><td>~/.minima</td></tr>
+<tr><td><code>-p2pnodes</code></td><td>Initial peer list</td><td>spartacusrex.com:9001</td></tr>
+<tr><td><code>-mdsenable</code></td><td>Enable MiniDAPP System</td><td>off</td></tr>
+<tr><td><code>-mdspassword</code></td><td>MDS password</td><td>auto-generated</td></tr>
+<tr><td><code>-solo</code></td><td>Solo mode (testing)</td><td>off</td></tr>
+<tr><td><code>-clean</code></td><td>Wipe previous data</td><td>off</td></tr>
+<tr><td><code>-megammr</code></td><td>MegaMMR exchange mode</td><td>off</td></tr>
+<tr><td><code>-test</code></td><td>Test mode (faster blocks)</td><td>off</td></tr>
+<tr><td><code>-genesis</code></td><td>Create genesis block</td><td>off</td></tr>
+<tr><td><code>-nop2p</code></td><td>Disable P2P networking</td><td>off</td></tr>
+</tbody>
+</table>
+
+<h3>Key Blockchain Parameters</h3>
+<table>
+<thead><tr><th>Parameter</th><th>Mainnet</th><th>Test Mode</th></tr></thead>
+<tbody>
+<tr><td>Block speed</td><td>~50 seconds</td><td>~20 seconds</td></tr>
+<tr><td>Confirm depth</td><td>3 blocks</td><td>3 blocks</td></tr>
+<tr><td>Cascade frequency</td><td>100 blocks</td><td>3 blocks</td></tr>
+<tr><td>Cascade start depth</td><td>1024 blocks</td><td>32 blocks</td></tr>
+<tr><td>MMR proof history</td><td>256 blocks</td><td>256 blocks</td></tr>
+<tr><td>Archive retention</td><td>50 days</td><td>50 days</td></tr>
+</tbody>
+</table>
+
+<h3>Minima Core Security</h3>
+<div class="alert info">The Minima Core codebase has undergone a comprehensive security audit with <strong>80 CodeQL alerts remediated</strong> across 7 categories (SSRF, path traversal, SQL injection, RSA-OAEP, RSA key size, AES-CBC, static IV). All 278 tests pass. Verified on mainnet (v1.0.46.8, block 2,219,786+).</div>
+</div>
+</section>
+
+<!-- CLUSTER -->
+<section id="cluster">
+<div class="container">
+<h2>Forming a PiNet Cluster</h2>
+<p>PiNet-OS clusters use the <strong>Maxima protocol</strong> (Minima's encrypted P2P bus) for all coordination. No central API server, no shared database.</p>
+
+<div class="step"><div class="step-num">1</div><div class="step-content"><h4>Start the Master Node</h4><pre><code>pinet start --role master</code></pre><p>This starts: Minima node (P2P :9001, RPC :9005), cluster manager (API :9090), web desktop (:3000), initializes cluster state, begins broadcasting heartbeats.</p></div></div>
+
+<div class="step"><div class="step-num">2</div><div class="step-content"><h4>Join Worker Nodes</h4><pre><code>pinet start --role worker --master &lt;master_maxima_address&gt;
+<span class="comment"># OR</span>
+pinet join &lt;master_maxima_address&gt;</code></pre></div></div>
+
+<div class="step"><div class="step-num">3</div><div class="step-content"><h4>Verify the Cluster</h4><pre><code>pinet cluster</code></pre><p>Or open the browser desktop at <code>http://&lt;any-node-ip&gt;:3000</code> and navigate to the Cluster Manager app.</p></div></div>
+
+<h3>Cluster Protocol</h3>
+<table>
+<thead><tr><th>Message</th><th>Direction</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>CLUSTER_JOIN_REQUEST</code></td><td>Worker → Master</td><td>Request to join</td></tr>
+<tr><td><code>CLUSTER_JOIN_ACCEPT</code></td><td>Master → Worker</td><td>Acceptance + peer list</td></tr>
+<tr><td><code>CLUSTER_HEARTBEAT</code></td><td>All → Master</td><td>Liveness + metrics (every 10s)</td></tr>
+<tr><td><code>CLUSTER_STATE_UPDATE</code></td><td>Master → All</td><td>Topology changes</td></tr>
+<tr><td><code>CLUSTER_EXEC_REQUEST</code></td><td>Master → Worker</td><td>Run a workload</td></tr>
+<tr><td><code>CLUSTER_EXEC_RESULT</code></td><td>Worker → Master</td><td>Workload result</td></tr>
+<tr><td><code>NODE_DEREGISTER</code></td><td>Any → Master</td><td>Graceful departure</td></tr>
+</tbody>
+</table>
+
+<h3>Node Health</h3>
+<ul>
+<li><strong>Active:</strong> Heartbeat received within 30 seconds</li>
+<li><strong>Stale:</strong> No heartbeat for 30–60 seconds</li>
+<li><strong>Offline:</strong> No heartbeat for &gt;60 seconds</li>
+</ul>
+</div>
+</section>
+
+<!-- CPIP -->
+<section id="cpip">
+<div class="container">
+<h2>CPIP Security Provider</h2>
+<p><strong>The Coffee Protocol (CPIP) v5.0.0</strong> is the primary security provider for all Minima nodes. Enabled by default (<code>CPIP_ENABLED=1</code>).</p>
+
+<table>
+<thead><tr><th>Primitive</th><th>Algorithm</th><th>Standard</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>CoffeeCipher v3</td><td>AES-256-GCM + HKDF-SHA256</td><td>FIPS 197 / SP 800-56C</td><td>Data at rest, RPC payload</td></tr>
+<tr><td>ECDSA P-256</td><td>SHA256withECDSA</td><td>FIPS 186-4</td><td>Node identity, attestation</td></tr>
+<tr><td>ECDH P-256</td><td>ECDH secp256r1</td><td>FIPS 186-4 / SP 800-56A</td><td>Key exchange</td></tr>
+<tr><td>HybridKEM</td><td>ECDH P-256 + Kyber ML-KEM-768</td><td>Hybrid (FIPS + Non-FIPS)</td><td>Post-quantum key encapsulation</td></tr>
+<tr><td>1nf1D3L Kyber</td><td>ML-KEM-768 (η=3)</td><td>Non-FIPS</td><td>PQ KEM (research variant)</td></tr>
+<tr><td>HMAC-SHA256</td><td>RPC token auth</td><td>FIPS 180-4</td><td>Replaces Basic Auth</td></tr>
+<tr><td>ITF Defense</td><td>Probe blocking, IP blacklist</td><td>—</td><td>Active defense</td></tr>
+<tr><td>FIPS Self-Tests</td><td>Power-on KATs</td><td>FIPS 140-2/3</td><td>Startup verification</td></tr>
+</tbody>
+</table>
+
+<h3>CoffeeCipher v3</h3>
+<p>AES-256-GCM (FIPS 197) with 12-byte nonce and 16-byte authentication tag. Key derivation via HKDF-SHA256 with domain-separated info strings. Format: <code>nonce(12B) || ciphertext || GCM-tag(16B)</code>.</p>
+
+<h3>HybridKEM (Classical + Post-Quantum)</h3>
+<p>ECDH P-256 + 1nf1D3L Kyber, combined via HKDF-SHA256. <strong>Secure if EITHER classical ECDH OR PQ Kyber component holds.</strong> PK~1251B, SK~2432B, CT~1187B, SS=32B.</p>
+
+<h3>ITF Defense</h3>
+<ul>
+<li><strong>Probe blocking:</strong> Returns HTTP 418 "I'm a teapot" to known scanning tools</li>
+<li><strong>Pentest tool fingerprinting:</strong> Detects 16 security tools (Burp Suite, Nmap, SQLMap, Nikto, etc.)</li>
+<li><strong>IP blacklisting:</strong> Rate-limited exponential ban duration (base 1 hour, up to 24 hours)</li>
+<li><strong>Stealth mode:</strong> Togglable at runtime via API</li>
+<li><strong>Defense policy groups:</strong> Anti-ISP, Anti-Stingray, Anti-Surveillance, Net-Neutrality — all independently togglable at runtime</li>
+</ul>
+
+<h3>CPIP Configuration</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>CPIP_ENABLED</code></td><td>1</td><td>Enable CPIP security provider</td></tr>
+<tr><td><code>CPIP_FIPS</code></td><td>0</td><td>FIPS 140-2/3 mode</td></tr>
+<tr><td><code>CPIP_DEFENSE_ENABLED</code></td><td>1</td><td>Enable ITF Defense</td></tr>
+<tr><td><code>CPIP_RPC_AUTH</code></td><td>1</td><td>HMAC-SHA256 token auth for RPC</td></tr>
+<tr><td><code>CPIP_PQ_TLS</code></td><td>0</td><td>Post-quantum TLS (ECDH + Kyber-768)</td></tr>
+<tr><td><code>CPIP_PQ_HYBRID</code></td><td>1</td><td>Hybrid classical + PQ key exchange</td></tr>
+<tr><td><code>CPIP_SSL</code></td><td>1</td><td>Enable HTTPS (TLS)</td></tr>
+<tr><td><code>CPIP_COVERT_KEY</code></td><td>(auto)</td><td>Encryption passphrase for covert channel</td></tr>
+<tr><td><code>CPIP_MESH</code></td><td>1</td><td>Enable mesh networking</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- PORTS -->
+<section id="ports">
+<div class="container">
+<h2>Network Ports Reference</h2>
+<table>
+<thead><tr><th>Port</th><th>Service</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>3000</td><td>Web Desktop</td><td>Browser-based control plane (FastAPI)</td></tr>
+<tr><td>4180</td><td>CPIP HTTP</td><td>Coffee Protocol server / ITF Defense</td></tr>
+<tr><td>4181</td><td>CPIP HTTP Redirect</td><td>HTTP-to-HTTPS redirect</td></tr>
+<tr><td>4190</td><td>CPIP Discovery</td><td>UDP pot discovery</td></tr>
+<tr><td>4191</td><td>CPIP Mesh</td><td>LAN UDP mesh heartbeat</td></tr>
+<tr><td>4195</td><td>CPIP Satellite</td><td>Internet-wide UDP relay</td></tr>
+<tr><td>4196</td><td>CPIP Mobile</td><td>4G/5G WWAN mesh</td></tr>
+<tr><td>9001</td><td>Minima P2P</td><td>Blockchain peer-to-peer networking</td></tr>
+<tr><td>9005</td><td>Minima RPC</td><td>Blockchain node JSON-RPC API</td></tr>
+<tr><td>9090</td><td>Cluster API</td><td>Go cluster manager API</td></tr>
+<tr><td>11434</td><td>Ollama</td><td>Local LLM inference (optional)</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- CONFIG -->
+<section id="config">
+<div class="container">
+<h2>Configuration Reference</h2>
+<p>All runtime configuration is controlled via environment variables. Copy <code>.env.example</code> to <code>.env</code> and edit as needed.</p>
+
+<h3>Core</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_DESKTOP_PORT</code></td><td>3000</td><td>Web desktop / API server port</td></tr>
+<tr><td><code>PINET_HOST</code></td><td>0.0.0.0</td><td>Bind address</td></tr>
+<tr><td><code>PINET_MINIMA_P2P_PORT</code></td><td>9001</td><td>Minima P2P base port</td></tr>
+<tr><td><code>PINET_MINIMA_RPC_PORT</code></td><td>9005</td><td>Minima RPC port</td></tr>
+<tr><td><code>MINIMA_RPC_URL</code></td><td>http://127.0.0.1:9005</td><td>Minima RPC endpoint override</td></tr>
+</tbody>
+</table>
+
+<h3>AI & LLM Gateway</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_LLM_GATEWAY</code></td><td>1</td><td>Enable on-device LLM gateway</td></tr>
+<tr><td><code>PINET_LLM_GATEWAY_URL</code></td><td>http://127.0.0.1:11434</td><td>Ollama API URL</td></tr>
+<tr><td><code>PINET_LLM_DEFAULT_MODEL</code></td><td>llama3.2:3b</td><td>Default LLM model</td></tr>
+<tr><td><code>PINET_LLM_FALLBACK_GEMINI</code></td><td>1</td><td>Fall back to Gemini cloud</td></tr>
+</tbody>
+</table>
+
+<h3>LXC Multi-Tenant Quotas (v1.3.0)</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_LXC_QUOTA</code></td><td>1</td><td>Enable multi-tenant LXC quotas</td></tr>
+<tr><td><code>PINET_LXC_MAX_TENANTS</code></td><td>16</td><td>Maximum LXC tenants per node</td></tr>
+</tbody>
+</table>
+
+<h3>TPM Key-Wrap (v1.3.0)</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_TPM_KEYWRAP</code></td><td>1</td><td>Enable TPM 2.0 hardware key-wrap</td></tr>
+</tbody>
+</table>
+
+<h3>Remote Attestation (v2.0.0)</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_ATTESTATION</code></td><td>1</td><td>Enable formal remote attestation</td></tr>
+</tbody>
+</table>
+
+<h3>v3.0.0 Features</h3>
+<table>
+<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>PINET_ENCLAVE</code></td><td>1</td><td>Enable confidential computing enclaves</td></tr>
+<tr><td><code>PINET_ENCLAVE_TEE_TYPE</code></td><td>auto</td><td>TEE type (cca, riscv-tee, auto)</td></tr>
+<tr><td><code>PINET_ZK_PROVER</code></td><td>1</td><td>Enable zkVM prover</td></tr>
+<tr><td><code>PINET_MARKETPLACE</code></td><td>1</td><td>Enable decentralized marketplace</td></tr>
+<tr><td><code>PINET_MARKETPLACE_MAX_LISTINGS</code></td><td>100</td><td>Max listings per node</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- TROUBLESHOOT -->
+<section id="troubleshoot">
+<div class="container">
+<h2>Troubleshooting</h2>
+<table>
+<thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td><strong>Java errors</strong></td><td>Confirm Java 17+ with <code>java -version</code></td></tr>
+<tr><td><strong>RPC connection refused</strong></td><td>Verify IP, port, and same subnet</td></tr>
+<tr><td><strong>Poor performance/overheating</strong></td><td>Use heatsink/fan and stable power supply</td></tr>
+<tr><td><strong>Port 3000 already in use</strong></td><td>Set <code>PINET_DESKTOP_PORT=3001</code> in <code>.env</code></td></tr>
+<tr><td><code>pip install</code> fails</td><td>Ensure Python 3.11+ is installed (<code>python3 --version</code>)</td></tr>
+<tr><td><strong>Pi not booting</strong></td><td>Re-flash the SD card; verify power supply (27W USB-C)</td></tr>
+<tr><td><strong>Web UI not loading on Pi</strong></td><td>Check <code>sudo systemctl status pinet-desktop</code></td></tr>
+<tr><td><strong>Minima node offline</strong></td><td>Run <code>sudo systemctl restart minima</code></td></tr>
+<tr><td><strong>SSH refused</strong></td><td>Run <code>sudo systemctl enable --now ssh</code></td></tr>
+<tr><td><strong>No display output</strong></td><td>Use micro-HDMI port 0 (closest to power)</td></tr>
+<tr><td><strong>Checksum mismatch</strong></td><td>Re-download the <code>.img</code> — file may be corrupted</td></tr>
+<tr><td><strong>Can't access web dashboard</strong></td><td>Check <code>http://&lt;pi-ip&gt;:3000</code>. Ensure Pi is on same network</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="arch">
+<div class="container">
+<h2>Architecture Overview</h2>
+
+<h3>Two-Layer Design</h3>
+<div class="grid">
+<div class="card">
+<h3>Layer 1: PiNet-OS Runtime (Linux)</h3>
+<ul>
+<li>CLI launcher (<code>bin/pinet</code>) — single POSIX shell script</li>
+<li>Minima node — blockchain identity, trust, Maxima P2P bus</li>
+<li>Go cluster manager — heartbeats, health, workloads, metrics</li>
+<li>Systemd services for production deployment</li>
+</ul>
+</div>
+<div class="card">
+<h3>Layer 2: Browser Desktop (Python)</h3>
+<ul>
+<li>FastAPI backend — API server, WebSocket terminal</li>
+<li>Jinja2 desktop UI — 23+ built-in apps</li>
+<li>Real-time updates via WebSocket channels</li>
+</ul>
+</div>
+</div>
+
+<h3>Trust Model</h3>
+<p>PiNet-OS implements a <strong>zero-trust, locally-anchored</strong> trust model:</p>
+<ul>
+<li><strong>Identity:</strong> ECDSA P-256 keypair via CPIP. Public key registered as Minima address. All Maxima P2P messages signed and encrypted.</li>
+<li><strong>Attestation:</strong> TPM 2.0 PCR values hashed and recorded on Minima blockchain. Tamper detectable.</li>
+<li><strong>Key Management:</strong> CPIP master keys PCR-sealed to TPM. Unseal only on matching boot path.</li>
+<li><strong>Network:</strong> All cluster traffic via encrypted WireGuard tunnels. Kubernetes NetworkPolicy default-deny.</li>
+</ul>
+
+<h3>Technology Stack</h3>
+<table>
+<thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+<tbody>
+<tr><td>Web server</td><td>FastAPI (Python 3.11+)</td></tr>
+<tr><td>Frontend</td><td>Jinja2 templates + vanilla JS/CSS</td></tr>
+<tr><td>Blockchain</td><td>Minima L1 (Java) — full node in &lt;500 MB</td></tr>
+<tr><td>P2P bus</td><td>Maxima — end-to-end encrypted message protocol</td></tr>
+<tr><td>Security</td><td>CPIP v5.0.0 (AES-256-GCM, ECDSA P-256, Kyber PQ KEM, ITF Defense)</td></tr>
+<tr><td>Cluster</td><td>k3s (lightweight Kubernetes) + Go cluster manager</td></tr>
+<tr><td>Storage</td><td>IPFS (content-addressed, blockchain-anchored)</td></tr>
+<tr><td>Networking</td><td>WireGuard mesh + nftables + fail2ban</td></tr>
+<tr><td>Disk encryption</td><td>LUKS2 with TPM 2.0 key sealing</td></tr>
+<tr><td>AI runtimes</td><td>TensorFlow Lite, ONNX Runtime, GGUF, Hailo SDK</td></tr>
+<tr><td>LLM gateway</td><td>Ollama with Hailo-8L NPU + Gemini fallback</td></tr>
+<tr><td>Attestation</td><td>TPM 2.0 PCR-based, anchored to Minima blockchain</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- VERSIONS -->
+<section id="versions">
+<div class="container">
+<h2>Version History & Roadmap</h2>
+<table>
+<thead><tr><th>Version</th><th>Status</th><th>Key Features</th></tr></thead>
+<tbody>
+<tr><td><strong>v1.1.0</strong></td><td>Released Q2 2026</td><td>Stable Pi 5 cluster, FastAPI desktop, security hardening, DApp platform, Raspberry Pi image</td></tr>
+<tr><td><strong>v1.2.0</strong></td><td>Released Q2 2026</td><td>CPIP security provider, signed OTA updates, Hailo-8L pipelines, federated DApp store</td></tr>
+<tr><td><strong>v1.3.0</strong></td><td>Released Q4 2026</td><td>On-device LLM gateway, multi-tenant LXC quotas, TPM 2.0 key-wrap, CPIP PQ-TLS</td></tr>
+<tr><td><strong>v2.0.0</strong></td><td>Released Q4 2026</td><td>RISC-V reference board, deterministic image rebuilds, formal remote attestation</td></tr>
+<tr><td><strong>v3.0.0</strong></td><td>Released Q4 2026</td><td>Confidential computing enclaves, zkVM proofs, decentralized edge compute marketplace</td></tr>
+</tbody>
+</table>
+
+<h3>Performance Characteristics</h3>
+<p><em>Raspberry Pi 5, 16 GB + Hailo-8L + NVMe</em></p>
+<table>
+<thead><tr><th>Metric</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Web desktop cold start</td><td>~1.2 s</td></tr>
+<tr><td>API throughput (GET /api/health)</td><td>~4500 req/s</td></tr>
+<tr><td>LLM inference (llama3.2:3b, NPU)</td><td>~45 tokens/s</td></tr>
+<tr><td>LLM inference (llama3.2:3b, CPU NEON)</td><td>~8 tokens/s</td></tr>
+<tr><td>Minima node sync (full chain)</td><td>~3 min</td></tr>
+<tr><td>TPM seal/unseal</td><td>~150 ms / ~120 ms</td></tr>
+<tr><td>PQ-TLS handshake</td><td>~95 ms</td></tr>
+<tr><td>Power consumption (idle)</td><td>~7.5 W</td></tr>
+<tr><td>Power consumption (AI inference)</td><td>~12 W</td></tr>
+</tbody>
+</table>
+
+<h3>References</h3>
+<ul>
+<li><strong>PiNet-OS Repository:</strong> <a href="https://github.com/WilliamMajanja/Minima-PiNet-Os">github.com/WilliamMajanja/Minima-PiNet-Os</a></li>
+<li><strong>Minima Core:</strong> <a href="https://github.com/WilliamMajanja/minima-core">github.com/WilliamMajanja/minima-core</a></li>
+<li><strong>CPIP (The Coffee Protocol):</strong> <a href="https://github.com/WilliamMajanja/CPIP-">github.com/WilliamMajanja/CPIP-</a></li>
+<li><strong>Minima Global:</strong> <a href="https://www.minima.global/">minima.global</a></li>
+</ul>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p>PiNet-OS is MIT licensed. Minima Core is Apache 2.0 licensed. CPIP is Unlicense.</p>
+<p>Architected by <a href="https://github.com/WilliamMajanja">William Majanja</a>.</p>
+<p style="margin-top:12px;font-size:.8rem;color:#555">Built for a more sovereign internet.</p>
+</div>
+</footer>
+
+<script>
+document.querySelectorAll('nav a').forEach(a=>{
+a.addEventListener('click',e=>{
+document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+a.classList.add('active');
+});
+});
+const obs=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+document.querySelectorAll('nav a').forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+e.target.id)a.classList.add('active');});
+}
+});
+},{threshold:.3});
+document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
