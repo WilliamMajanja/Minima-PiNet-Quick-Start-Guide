@@ -6,7 +6,7 @@ This guide walks you through setting up **Minima-PiNet-OS** on a Raspberry Pi, r
 
 **Architect:** William Majanja
 **License:** MIT (PiNet-OS) / Apache 2.0 (Minima Core) / Unlicense (Coffee Protocol CPIP)
-**Version:** PiNet-OS v3.0.0 | Minima Core v1.1.2 | CPIP v5.0.0
+**Version:** PiNet-OS v3.0.0 | Minima Core v1.1.2 | CPIP v5.1.1
 
 ---
 
