@@ -6,6 +6,9 @@
 <title>PiNet-OS Quick Start Guide</title>
 <meta name="description" content="Turn a Raspberry Pi into a self-sovereign edge cloud — blockchain-native, AI-accelerated, zero-trust by default.">
 <meta name="theme-color" content="#08080d">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,15 +57,15 @@ header .hero-cta{display:flex;gap:10px;justify-content:center;margin-top:28px;fl
 .badge.accent{color:var(--accent-hover);border-color:var(--accent-soft)}
 
 /* ═══════════ NAV ═══════════ */
-.nav-wrap{position:sticky;top:0;z-index:300;background:url('img/pi-cluster.jpg') center 30%/cover no-repeat;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 1px 12px rgba(0,0,0,.4)}
-.nav-wrap::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.5);z-index:0}
+.nav-wrap{position:sticky;top:0;z-index:300;background:url('img/circuit-board.jpg') center/cover no-repeat;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 1px 12px rgba(0,0,0,.4)}
+.nav-wrap::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.25);z-index:0}
 nav{position:relative;z-index:1;background:transparent;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav .container{display:flex;gap:0;justify-content:center}
-nav a{display:inline-flex;align-items:center;padding:14px 16px;color:rgba(255,255,255,.7);font-size:.74rem;font-weight:500;letter-spacing:.01em;border-bottom:2px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative}
-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
-nav a.active{color:#fff;border-bottom-color:var(--accent);background:rgba(139,124,246,.06)}
-nav a.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:16px;height:2px;background:var(--accent);border-radius:1px}
+nav .container{display:flex;gap:0;justify-content:center;align-items:stretch}
+nav a{display:inline-flex;align-items:center;padding:16px 16px;color:rgba(255,255,255,.75);font-size:.74rem;font-weight:600;letter-spacing:.01em;border-bottom:2px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav a.active{color:#fff;border-bottom-color:var(--accent);background:rgba(139,124,246,.08)}
+nav a.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--accent);border-radius:1px}
 
 /* ═══════════ SECTIONS ═══════════ */
 section{padding:64px 0;border-bottom:1px solid var(--border);position:relative;background-size:cover;background-position:center;background-attachment:fixed}
