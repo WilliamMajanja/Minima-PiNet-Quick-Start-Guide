@@ -54,13 +54,13 @@ header .hero-cta{display:flex;gap:10px;justify-content:center;margin-top:28px;fl
 .badge.accent{color:var(--accent-hover);border-color:var(--accent-soft)}
 
 /* ═══════════ NAV ═══════════ */
-.nav-wrap{position:sticky;top:0;z-index:200}
-nav{background:rgba(8,8,13,.92);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.nav-wrap{position:sticky;top:0;z-index:200;background:linear-gradient(180deg,rgba(8,8,13,.4) 0%,rgba(8,8,13,.85) 100%);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border-bottom:1px solid var(--border)}
+nav{background:transparent;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav .container{display:flex;gap:0;justify-content:center}
-nav a{display:inline-flex;align-items:center;padding:14px 16px;color:var(--text-tertiary);font-size:.74rem;font-weight:500;letter-spacing:.01em;border-bottom:1.5px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative}
-nav a:hover{color:var(--text-secondary)}
-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
+nav a{display:inline-flex;align-items:center;padding:14px 16px;color:rgba(255,255,255,.5);font-size:.74rem;font-weight:500;letter-spacing:.01em;border-bottom:1.5px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative}
+nav a:hover{color:rgba(255,255,255,.85)}
+nav a.active{color:#fff;border-bottom-color:var(--accent)}
 nav a.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:16px;height:1.5px;background:var(--accent);border-radius:1px}
 
 /* ═══════════ SECTIONS ═══════════ */
@@ -387,36 +387,38 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 <!-- OVERVIEW -->
 <section id="overview" class="bg-pi-board">
 <div class="container">
-<h2>Overview <a class="anchor-icon" href="#overview" aria-label="Link">#</a></h2>
-<div class="alert success" style="margin-bottom:24px"><strong>One-Liner Quick Start:</strong> Copy and run this single command to install and start PiNet-OS:</div>
-<pre><code><span class="comment"># Quick start — clone, setup, and run</span>
-git clone --depth 1 https://github.com/WilliamMajanja/Minima-PiNet-Os.git && cd Minima-PiNet-Os && bin/pinet setup && bin/pinet start --role master</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
-<p>Dashboard: <code>http://&lt;your-pi-ip&gt;:3000</code> — default creds: <code>pinet</code> / <code>pinet</code> (change immediately).</p>
+<h2>Overview</h2>
 <p><strong>Minima-PiNet-OS</strong> (v3.0.0) is a zero-bloat, blockchain-native operating system that turns an $80 Raspberry Pi into a self-sovereign edge cloud.</p>
+
+<div class="alert success"><strong>Quick Start:</strong> Copy and run this single command to install and start PiNet-OS:</div>
+<pre><code>git clone --depth 1 https://github.com/WilliamMajanja/Minima-PiNet-Os.git && cd Minima-PiNet-Os && bin/pinet setup && bin/pinet start --role master</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+<p>Dashboard: <code>http://&lt;your-pi-ip&gt;:3000</code> — default creds: <code>pinet</code> / <code>pinet</code> (change immediately).</p>
+
+<h3>Core Features</h3>
 <div class="grid">
 <div class="card reveal stagger-1">
-<h3>Minima L1 Blockchain</h3>
-<p>Full node in &lt;500 MB. UTXO model, MMR proof database, KISSVM scripting, WOTS+ post-quantum signatures. Every user is a complete node.</p>
+<h4>Minima L1 Blockchain</h4>
+<p>Full node in &lt;500 MB. UTXO model, MMR proof database, KISSVM scripting, WOTS+ post-quantum signatures.</p>
 </div>
 <div class="card reveal stagger-2">
-<h3>CPIP Security Provider</h3>
-<p>AES-256-GCM, ECDSA P-256, Hybrid ECDH + Kyber ML-KEM-768, HMAC-SHA256 RPC auth, ITF Defense probe blocking.</p>
+<h4>CPIP Security Provider</h4>
+<p>AES-256-GCM, ECDSA P-256, Hybrid ECDH + Kyber ML-KEM-768, HMAC-SHA256 RPC auth, ITF Defense.</p>
 </div>
 <div class="card reveal stagger-3">
-<h3>k3s Edge Cluster</h3>
-<p>Lightweight Kubernetes for containerised workloads. LXC with cgroups v2 quotas, up to 16 tenants per node.</p>
+<h4>k3s Edge Cluster</h4>
+<p>Lightweight Kubernetes for containerised workloads. LXC with cgroups v2 quotas, up to 16 tenants.</p>
 </div>
 <div class="card reveal stagger-4">
-<h3>On-Device AI</h3>
+<h4>On-Device AI</h4>
 <p>Hailo-8L NPU (13 TOPS) for local LLM inference via Ollama/GGUF. ARM NEON fallback on Pi 4.</p>
 </div>
 <div class="card reveal stagger-5">
-<h3>Browser Desktop</h3>
-<p>FastAPI + Jinja2 web UI with 23+ built-in apps: terminal, system monitor, cluster manager, wallet, AI assistant.</p>
+<h4>Browser Desktop</h4>
+<p>FastAPI + Jinja2 web UI with 23+ built-in apps: terminal, monitor, cluster manager, wallet.</p>
 </div>
 <div class="card reveal stagger-6">
-<h3>Confidential Computing</h3>
-<p>Arm CCA / RISC-V AP-TEE enclaves, zkVM verifiable compute proofs, decentralized edge compute marketplace.</p>
+<h4>Confidential Computing</h4>
+<p>Arm CCA / RISC-V AP-TEE enclaves, zkVM verifiable compute proofs, edge compute marketplace.</p>
 </div>
 </div>
 </div>
