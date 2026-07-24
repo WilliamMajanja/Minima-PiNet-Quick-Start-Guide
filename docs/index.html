@@ -26,6 +26,10 @@
 }
 html{scroll-behavior:smooth;scroll-padding-top:60px}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px}
+@media(min-width:901px){
+  body::before{content:'';position:fixed;top:0;left:0;width:220px;height:100vh;background:url('img/server-rack.jpg') center/cover no-repeat;z-index:-1}
+  body::after{content:'';position:fixed;top:0;left:0;width:220px;height:100vh;background:rgba(8,8,13,.65);z-index:-1}
+}
 ::selection{background:var(--accent);color:#fff}
 a{color:var(--accent-hover);text-decoration:none;transition:color var(--duration) var(--ease)}
 a:hover{color:#fff}
