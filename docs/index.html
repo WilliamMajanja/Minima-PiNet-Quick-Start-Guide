@@ -23,21 +23,18 @@
   --green:#5eca9a;--red:#e07070;--yellow:#dbb060;--blue:#6ea8e8;
   --radius:8px;--radius-lg:12px;
   --ease:cubic-bezier(.4,0,.2,1);--duration:.3s;
+  --ov:rgba(8,8,13,.72);
 }
-html{scroll-behavior:smooth;scroll-padding-top:60px}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px}
-@media(min-width:901px){
-  body::before{content:'';position:fixed;top:0;left:0;width:220px;height:100vh;background:url('img/server-rack.jpg') center/cover no-repeat;z-index:-1}
-  body::after{content:'';position:fixed;top:0;left:0;width:220px;height:100vh;background:rgba(8,8,13,.65);z-index:-1}
-}
+html{scroll-behavior:smooth;scroll-padding-top:60px;background:url('img/circuit-board.jpg') fixed center/cover}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--ov);color:var(--text);line-height:1.75;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px}
 ::selection{background:var(--accent);color:#fff}
 a{color:var(--accent-hover);text-decoration:none;transition:color var(--duration) var(--ease)}
 a:hover{color:#fff}
 .container{max-width:1080px;margin:0 auto;padding:0 24px}
 
 /* ═══════════ HEADER ═══════════ */
-header{position:relative;padding:96px 0 68px;text-align:center;overflow:hidden;background:url('img/pi-cluster.jpg') center/cover no-repeat}
-header::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,13,.45),rgba(8,8,13,.72) 50%,rgba(8,8,13,.94));pointer-events:none}
+header{position:relative;padding:96px 0 68px;text-align:center;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,13,.2),rgba(8,8,13,.5) 50%,rgba(8,8,13,.8));pointer-events:none}
 header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--border)}
 
 header .container{position:relative;z-index:1}
@@ -58,29 +55,21 @@ header .hero-cta{display:flex;gap:10px;justify-content:center;margin-top:28px;fl
 .badge.accent{color:var(--accent-hover);border-color:var(--accent-soft)}
 
 /* ═══════════ NAV ═══════════ */
-.nav-wrap{position:sticky;top:0;z-index:300;background:url('img/circuit-board.jpg') center/cover no-repeat;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 1px 12px rgba(0,0,0,.4)}
-.nav-wrap::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.25);z-index:0}
+.nav-wrap{position:sticky;top:0;z-index:300;background:rgba(8,8,13,.55);backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.06)}
 nav{position:relative;z-index:1;background:transparent;overflow-x:auto;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
 nav .container{display:flex;gap:0;justify-content:center;align-items:stretch}
-nav a{display:inline-flex;align-items:center;padding:16px 16px;color:rgba(255,255,255,.75);font-size:.74rem;font-weight:600;letter-spacing:.01em;border-bottom:2px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-nav a:hover{color:#fff;background:rgba(255,255,255,.06)}
-nav a.active{color:#fff;border-bottom-color:var(--accent);background:rgba(139,124,246,.08)}
+nav a{display:inline-flex;align-items:center;padding:16px 16px;color:rgba(255,255,255,.65);font-size:.74rem;font-weight:600;letter-spacing:.01em;border-bottom:2px solid transparent;transition:all var(--duration) var(--ease);white-space:nowrap;position:relative}
+nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+nav a.active{color:#fff;border-bottom-color:var(--accent);background:rgba(139,124,246,.06)}
 nav a.active::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--accent);border-radius:1px}
 
 /* ═══════════ SECTIONS ═══════════ */
-section{padding:64px 0;border-bottom:1px solid var(--border);position:relative;background-size:cover;background-position:center;background-attachment:fixed}
-section::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.78);z-index:0}
+section{padding:64px 0;border-bottom:1px solid rgba(255,255,255,.04);position:relative}
+section::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.3);z-index:0}
+section:nth-child(odd)::before{background:rgba(8,8,13,.4)}
 section>.container{position:relative;z-index:1}
 section:last-of-type{border-bottom:none}
-
-.bg-pi-board{background-image:url('img/pi-board.jpg')}
-.bg-circuit{background-image:url('img/circuit-board.jpg')}
-.bg-cluster{background-image:url('img/pi-cluster.jpg')}
-.bg-motherboard{background-image:url('img/pi-motherboard.jpg')}
-.bg-server{background-image:url('img/server-rack.jpg')}
-.bg-network{background-image:url('img/network-server.jpg')}
-.bg-server-room{background-image:url('img/server-room.jpg')}
 
 /* ═══════════ TYPOGRAPHY ═══════════ */
 h2{font-size:1.55rem;font-weight:700;letter-spacing:-.02em;margin-bottom:18px;color:#fff}
@@ -159,7 +148,7 @@ pre:hover .copy-btn{opacity:1}
 .scroll-top:hover{background:var(--surface3);color:var(--text-secondary);border-color:var(--border-hover)}
 
 /* ═══════════ FOOTER ═══════════ */
-footer{background:var(--surface-solid);border-top:1px solid var(--border);padding:44px 0 32px;text-align:center;position:relative}
+footer{background:rgba(8,8,13,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(255,255,255,.06);padding:44px 0 32px;text-align:center;position:relative}
 footer .container{display:flex;flex-direction:column;align-items:center;gap:10px}
 footer p{color:var(--text-tertiary);font-size:.8rem;margin:0}
 footer a{color:var(--accent-hover)}
@@ -175,9 +164,7 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 /* ═══════════ TOC SIDEBAR ═══════════ */
 .toc-toggle{display:none;position:fixed;bottom:24px;left:24px;z-index:350;width:38px;height:38px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(10px);color:var(--text-tertiary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);align-items:center;justify-content:center}
 .toc-toggle:hover{background:var(--surface3);color:var(--text-secondary)}
-.toc-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:url('img/server-rack.jpg') center/cover no-repeat;border-right:1px solid rgba(255,255,255,.08);padding:0;z-index:400;overflow-y:auto;transform:translateX(-100%);transition:transform .25s var(--ease)}
-.toc-sidebar::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.65);z-index:0}
-.toc-sidebar > *{position:relative;z-index:1}
+.toc-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:rgba(8,8,13,.4);backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);border-right:1px solid rgba(255,255,255,.06);padding:0;z-index:400;overflow-y:auto;transform:translateX(-100%);transition:transform .25s var(--ease)}
 .toc-sidebar.open{transform:none}
 .toc-sidebar h4{padding:20px 16px 12px;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.06)}
 .toc-sidebar a{display:block;padding:9px 16px;font-size:.78rem;color:rgba(255,255,255,.5);transition:all var(--duration) var(--ease);border-left:1.5px solid transparent;text-decoration:none}
@@ -207,7 +194,6 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 @media(min-width:901px){
   .toc-toggle{display:none !important}
   .toc-sidebar{display:block !important;transform:none !important}
-  body{margin-left:220px}
   header,.nav-wrap,section,footer,.progress-bar{margin-left:220px}
   .container{max-width:820px}
   nav a{padding:14px 12px}
@@ -298,9 +284,11 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 
 /* ═══════════ PRINT ═══════════ */
 @media print{
+  html{background:none}
   body{background:#fff;color:#111;margin:0}
   .progress-bar,.toc-toggle,.toc-sidebar,.search-overlay,.scroll-top,.nav-wrap,.copy-btn,.hero-cta{display:none !important}
   header{background:none !important;padding:16px 0}
+  header::before{display:none}
   header h1{color:#111;font-size:1.5rem}
   header .tagline{color:#444}
   section{background:none !important;border-bottom:1px solid #ddd;padding:14px 0}
@@ -396,7 +384,7 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 </div>
 
 <!-- OVERVIEW -->
-<section id="overview" class="bg-pi-board">
+<section id="overview">
 <div class="container">
 <h2>Overview</h2>
 <p><strong>Minima-PiNet-OS</strong> (v3.0.0) is a zero-bloat, blockchain-native operating system that turns an $80 Raspberry Pi into a self-sovereign edge cloud — blockchain-native, AI-accelerated, zero-trust by default.</p>
@@ -441,7 +429,7 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 </section>
 
 <!-- HARDWARE -->
-<section id="hardware" class="bg-circuit">
+<section id="hardware">
 <div class="container">
 <h2>Hardware Requirements <a class="anchor-icon" href="#hardware" aria-label="Link">#</a></h2>
 <div class="table-wrap">
@@ -464,7 +452,7 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 </section>
 
 <!-- FLASH & BOOT -->
-<section id="flash" class="bg-motherboard">
+<section id="flash">
 <div class="container">
 <h2>Quick Start: Flash & Boot <a class="anchor-icon" href="#flash" aria-label="Link">#</a></h2>
 <div class="step reveal">
@@ -513,7 +501,7 @@ sync</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
 </section>
 
 <!-- RUNTIME -->
-<section id="runtime" class="bg-server">
+<section id="runtime">
 <div class="container">
 <h2>Spawnable Runtime (Any Linux) <a class="anchor-icon" href="#runtime" aria-label="Link">#</a></h2>
 <p>PiNet-OS runs as a contained environment on <strong>any existing Linux distro</strong> on Raspberry Pi. No dedicated image flashing required.</p>
@@ -551,7 +539,7 @@ pinet config show        <span class="comment"># View configuration</span></code
 </section>
 
 <!-- DEMO -->
-<section id="demo" class="bg-pi-board">
+<section id="demo">
 <div class="container">
 <h2>Local Desktop Demo <a class="anchor-icon" href="#demo" aria-label="Link">#</a></h2>
 <p>Run the full web desktop UI locally in under two minutes — no Raspberry Pi required.</p>
@@ -572,7 +560,7 @@ python run.py</code><button class="copy-btn" onclick="copyCode(this)">Copy</butt
 </section>
 
 <!-- MINIMA -->
-<section id="minima" class="bg-circuit">
+<section id="minima">
 <div class="container">
 <h2>Minima Blockchain Node <a class="anchor-icon" href="#minima" aria-label="Link">#</a></h2>
 <p>Minima is a decentralized L1 blockchain with a UTXO model, MMR proof database, covenants, MAST, and post-quantum signatures (WOTS+). Every user runs a full node.</p>
@@ -631,7 +619,7 @@ java -jar minima.jar -nop2p -test -genesis</code><button class="copy-btn" onclic
 </section>
 
 <!-- CLUSTER -->
-<section id="cluster" class="bg-cluster">
+<section id="cluster">
 <div class="container">
 <h2>Forming a PiNet Cluster <a class="anchor-icon" href="#cluster" aria-label="Link">#</a></h2>
 <p>PiNet-OS clusters use the <strong>Maxima protocol</strong> (Minima's encrypted P2P bus) for all coordination. No central API server, no shared database.</p>
@@ -690,7 +678,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- CPIP -->
-<section id="cpip" class="bg-server-room">
+<section id="cpip">
 <div class="container">
 <h2>CPIP Security Provider <a class="anchor-icon" href="#cpip" aria-label="Link">#</a></h2>
 <p><strong>The Coffee Protocol (CPIP) v5.0.5</strong> is the primary security provider for all Minima nodes. Enabled by default (<code>CPIP_ENABLED=1</code>).</p>
@@ -754,7 +742,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- PORTS -->
-<section id="ports" class="bg-network">
+<section id="ports">
 <div class="container">
 <h2>Network Ports Reference <a class="anchor-icon" href="#ports" aria-label="Link">#</a></h2>
 <div class="table-wrap">
@@ -779,7 +767,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- CONFIG -->
-<section id="config" class="bg-server">
+<section id="config">
 <div class="container">
 <h2>Configuration Reference <a class="anchor-icon" href="#config" aria-label="Link">#</a></h2>
 <p>All runtime configuration is controlled via environment variables. Copy <code>.env.example</code> to <code>.env</code> and edit as needed.</p>
@@ -859,7 +847,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- TROUBLESHOOT -->
-<section id="troubleshoot" class="bg-motherboard">
+<section id="troubleshoot">
 <div class="container">
 <h2>Troubleshooting <a class="anchor-icon" href="#troubleshoot" aria-label="Link">#</a></h2>
 <div class="table-wrap">
@@ -885,7 +873,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- ARCHITECTURE -->
-<section id="arch" class="bg-cluster">
+<section id="arch">
 <div class="container">
 <h2>Architecture Overview <a class="anchor-icon" href="#arch" aria-label="Link">#</a></h2>
 
@@ -943,7 +931,7 @@ pinet join &lt;master_maxima_address&gt;</code><button class="copy-btn" onclick=
 </section>
 
 <!-- VERSIONS -->
-<section id="versions" class="bg-circuit">
+<section id="versions">
 <div class="container">
 <h2>Version History & Roadmap <a class="anchor-icon" href="#versions" aria-label="Link">#</a></h2>
 <div class="table-wrap">
