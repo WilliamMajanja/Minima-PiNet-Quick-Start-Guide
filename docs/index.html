@@ -171,12 +171,14 @@ footer .footer-divider{width:28px;height:1px;background:var(--border);margin:4px
 /* ═══════════ TOC SIDEBAR ═══════════ */
 .toc-toggle{display:none;position:fixed;bottom:24px;left:24px;z-index:350;width:38px;height:38px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(10px);color:var(--text-tertiary);font-size:.85rem;cursor:pointer;transition:all var(--duration) var(--ease);align-items:center;justify-content:center}
 .toc-toggle:hover{background:var(--surface3);color:var(--text-secondary)}
-.toc-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--bg);border-right:1px solid var(--border);padding:20px 0;z-index:400;overflow-y:auto;transform:translateX(-100%);transition:transform .25s var(--ease)}
+.toc-sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:url('img/server-rack.jpg') center/cover no-repeat;border-right:1px solid rgba(255,255,255,.08);padding:0;z-index:400;overflow-y:auto;transform:translateX(-100%);transition:transform .25s var(--ease)}
+.toc-sidebar::before{content:'';position:absolute;inset:0;background:rgba(8,8,13,.65);z-index:0}
+.toc-sidebar > *{position:relative;z-index:1}
 .toc-sidebar.open{transform:none}
-.toc-sidebar h4{padding:0 16px 16px;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:4px;border-bottom:1px solid var(--border)}
-.toc-sidebar a{display:block;padding:8px 16px;font-size:.78rem;color:var(--text-tertiary);transition:all var(--duration) var(--ease);border-left:1.5px solid transparent;text-decoration:none}
-.toc-sidebar a:hover{color:var(--text-secondary);background:rgba(255,255,255,.015)}
-.toc-sidebar a.active{color:var(--text);border-left-color:var(--accent);background:rgba(139,124,246,.03)}
+.toc-sidebar h4{padding:20px 16px 12px;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.06)}
+.toc-sidebar a{display:block;padding:9px 16px;font-size:.78rem;color:rgba(255,255,255,.5);transition:all var(--duration) var(--ease);border-left:1.5px solid transparent;text-decoration:none}
+.toc-sidebar a:hover{color:#fff;background:rgba(255,255,255,.04)}
+.toc-sidebar a.active{color:#fff;border-left-color:var(--accent);background:rgba(139,124,246,.06)}
 .toc-sidebar .toc-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:var(--radius);background:var(--surface2);border:1px solid var(--border);color:var(--text-tertiary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all var(--duration) var(--ease)}
 .toc-sidebar .toc-close:hover{background:var(--surface3);color:var(--text-secondary)}
 
